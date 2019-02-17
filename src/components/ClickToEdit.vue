@@ -1,56 +1,40 @@
 <template>
-<!-- <div>
-    <input type="text"
-           v-if="edit"
-           :value="valueLocal"
-           @blur.native="valueLocal = $event.target.value; edit = false; $emit('input', valueLocal);"
-           @keyup.enter.native="valueLocal = $event.target.value; edit = false; $emit('input', valueLocal);"
-           v-focus=""
-             />
-        <p v-else="" @click="edit = true;">
-          {{valueLocal}}
-        </p>
-    </div> -->
-<div>
-  <input type="text" :value="valueLocal">
-</div>
+<live-edit
+v-model="value"
+:editable="isEditable"
+placeholder="placeholder on edit"
+:multiline="multiline"
+v-on:click="toggleEdit(ev, test)">
+</live-edit>
 </template>
 
 <script>
 export default {
-
-  props: ['value'],
-
-  data() {
-      return {
-        // edit: false,
-        valueLocal: this.value,
-      }
+  props: {
+    value: {
+      type: String,
+      required: true
+    },
+    multiline: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      required: false,
+      default: "Double click to type"
+    },
+    isEditable: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
   },
-  methods: {
-    toggleEdit: function(event) {
-      if (isDisabled) {
-        isDisabled = false;
-        return;
-      }
-
-      isDisabled = true;
+  data() {
+    return {
+      valueLocal: this.value
     }
   }
-
-  // watch: {
-  //   value: function() {
-  //     this.valueLocal = this.value;
-  //   }
-  // },
-  //
-  // directives: {
-  //   focus: {
-  //     inserted (el) {
-  //       el.focus()
-  //     }
-  //   }
-  // }
-
 }
 </script>

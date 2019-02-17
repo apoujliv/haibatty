@@ -5,12 +5,14 @@ import HelloWorld from './components/HelloWorld.vue'
 import CharacterVue from './components/Character.vue'
 import CharacterFormVue from './components/CharacterForm.vue'
 import ClickToEdit from './components/ClickToEdit.vue'
+import LiveEdit from './components/LiveEdit.vue'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 
 Vue.component('clickToEdit', ClickToEdit);
-Vue.component('characterFormVue', CharacterFormVue, {props: ['character','newAspect']});
+Vue.component('characterFormVue', CharacterFormVue, {props: ['character','newAspect','newStuntPower','newSkill']});
+Vue.component('liveEdit', LiveEdit);
 
 const router = new VueRouter({
   mode: 'history',
