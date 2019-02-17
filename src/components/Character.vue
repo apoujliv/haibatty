@@ -7,9 +7,14 @@
 </section>
 </template>
 <script>
-
+import PowerLevels from './PowerLevels.js'
 export default {
-    components: {
+    props: {
+      character:{
+        type: Array,
+        required: false,
+        default: () => ([])
+      }
     }
 }
 

@@ -2,9 +2,9 @@
 <div id="app">
 
   <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-    <a class="navbar-brand" href="#">
+      <router-link to="/" class="nav-link navbar-brand" href="#">
       <img src="./assets/bat-temp.png" alt="bat" style="max-height:50px;max-width:50px;height:auto;width:auto;" />
-      haibatty</a>
+      haibatty</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -16,13 +16,10 @@
         <li class="nav-item">
           <router-link to="/character" class="nav-link">New Characters</router-link>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
       </ul>
     </div>
   </nav>
-  <div class="container">
+  <div>
     <router-view class="view"></router-view>
   </div>
 

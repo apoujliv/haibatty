@@ -1,10 +1,9 @@
 <template>
 <live-edit
-v-model="value"
+v-model="valueLocal"
 :editable="isEditable"
-placeholder="placeholder on edit"
-:multiline="multiline"
-v-on:click="toggleEdit(ev, test)">
+:placeholder="placeholder"
+:multiline="multiline">
 </live-edit>
 </template>
 
@@ -31,9 +30,14 @@ export default {
       default: false
     }
   },
-  data() {
+  data(){
     return {
       valueLocal: this.value
+    }
+  },
+  watch: {
+    valueLocal: function(val){
+      this.$emit('value', val);
     }
   }
 }
