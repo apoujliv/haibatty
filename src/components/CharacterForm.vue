@@ -3,60 +3,61 @@
   <div>
     <div class="character">
       <div class="row">
-        <div class="col-md-6 mx-auto">
-          <h1>
-            <clickToEdit :value="editedCharacter.name" placeholder="FirstName LastName"></clickToEdit>
-          </h1>
+        <div class="col-md-4 mx-auto">
           <h2>
-            <clickToEdit :value="editedCharacter.highConcept" placeholder="High Concept"></clickToEdit>
+            <clickToEdit :value="editedCharacter.name" placeholder="FirstName LastName"></clickToEdit>
           </h2>
-          <img :src="editedCharacter.imgUrl" alt="character image" style="max-height:250px;max-width:250px;height:auto;width:auto;">
+          <h3>
+            <clickToEdit :value="editedCharacter.highConcept" placeholder="High Concept"></clickToEdit>
+          </h3>
+          <img :src="editedCharacter.imgUrl" alt="character image" style="max-height:250px;max-width:250px;height:auto;width:auto;padding:5px">
           <form v-on:submit.prevent="updateImage">
             <input v-model="newImgUrl.url"></input>
-            <button>Update Image URL</button>
+            <button class="btn btn-primary">Update Image URL</button>
           </form>
         </div>
-        <div class="col-md-6 mx-auto">
-          <h2>Power Level: {{editedCharacter.powerLevel.name}}</h2>
-          <h2>Aspects</h2>
-          <h3>Trouble</h3>
-          <clickToEdit :value="editedCharacter.trouble" placeholder="Trouble"></clickToEdit>
+        <div class="col-md-8 mx-auto">
+          <h3>Power Level: {{editedCharacter.powerLevel.name}}</h3>
           <h3>Aspects</h3>
+          <h4>Trouble</h4>
+          <clickToEdit :value="editedCharacter.trouble" placeholder="Trouble"></clickToEdit>
+          <h4>Aspects</h4>
           <clickToEdit v-for="aspect in editedCharacter.aspects" :value="aspect.name" placeholder="Aspect"></clickToEdit>
           <form v-on:submit.prevent="addAspect">
             <input v-model="newAspect.name"></input>
-            <button>Add New Aspect</button>
+            <button class="btn btn-primary">Add New Aspect</button>
           </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 mx-auto">
-          <h2>Stunts and Powers</h2>
+          <h3>Stunts and Powers</h3>
           <div>Total Refresh: <span>{{totalRefresh}}</span></div>
-          <div v-for="stuntPower in editedCharacter.stuntsAndPowers">
-            <clickToEdit :value="stuntPower.refresh"></clickToEdit>
-            <clickToEdit :value="stuntPower.name"></clickToEdit>
-            <clickToEdit :value="stuntPower.description" :multiline="true"></clickToEdit>
+          <div class="row">
+            <div v-for="stuntPower in editedCharacter.stuntsAndPowers" class="col-md-5 card border-dark m-2 pb-4 box-shadow">
+              <clickToEdit :value="stuntPower.refresh"></clickToEdit>
+              <clickToEdit :value="stuntPower.name"></clickToEdit>
+              <clickToEdit :value="stuntPower.description" :multiline="true"></clickToEdit>
+            </div>
           </div>
-          <form v-on:submit.prevent="addStuntPower">
-            <input v-model="newStuntPower.name" placeholder="Enter Stunt Name"></input>
-            <input v-model="newStuntPower.description" placeholder="Enter Stunt Description"></input>
-            <input v-model="newStuntPower.refresh" type="number" style="width:50px"></input>
-            <button>Add New Stunt or Power</button>
-          </form>
-        </div>
-        <div class="col-md-6 mx-auto">
-          <h2>Skills</h2>
-          <clickToEdit v-for="skill in editedCharacter.skills" :value="skill.name"></clickToEdit>
-          <form v-on:submit.prevent="addSkill">
-            <input v-model="newSkill.name"></input>
-            <button>Add New Skill</button>
-          </form>
+          <div class="row">
+            <form v-on:submit.prevent="addStuntPower">
+              <input v-model="newStuntPower.name" placeholder="Enter Stunt Name"></input>
+              <input v-model="newStuntPower.description" placeholder="Enter Stunt Description"></input>
+              <input v-model="newStuntPower.refresh" type="number" style="width:50px"></input>
+              <button class="btn btn-primary">Add New Stunt or Power</button>
+            </form>
+          </div>
+          <div class="row">
+            <h3>Skills</h3>
+            <clickToEdit v-for="skill in editedCharacter.skills" :value="skill.name"></clickToEdit>
+          </div>
+          <div class="row"><form v-on:submit.prevent="addSkill">
+              <input v-model="newSkill.name"></input>
+              <button class="btn btn-primary">Add New Skill</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
     <router-link :to="{    name: 'Home' }">
-      <button>Save</button>
+      <button class="btn btn-primary">Save</button>
     </router-link>
   </div>
 </section>

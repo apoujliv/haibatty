@@ -1,5 +1,5 @@
 <template>
-<section id="hello-section" class="about-section text-center">
+<section class="text-center">
   <div>
     <section>
       <p>Welcome to haibatty.</p>
@@ -8,17 +8,18 @@
       <div v-for="campaign in campaigns">
         <div class="row">
           <h3 class="my-4">
+            <button type="button" class="btn btn-danger" @click="deleteCampaign(campaign.name)" value="campaign.name">X</button>
             Campaign: {{campaign.name}}<br />
           </h3>
         </div>
-          <div>
-            <characterList :characters="campaign.characters"></characterList>
-          </div>
+        <div>
+          <characterList :characters="campaign.characters"></characterList>
         </div>
-        <form v-on:submit.prevent="addCampaign">
-          <input v-model="newCampaign.name"></input>
-          <button>Add New Campaign</button>
-        </form>
+      </div>
+      <form v-on:submit.prevent="addCampaign">
+        <input v-model="newCampaign.name"></input>
+        <button type="submit" class="btn btn-primary">Add New Campaign</button>
+      </form>
     </section>
   </div>
 
@@ -28,15 +29,42 @@
 
 <script>
 import PowerLevels from './PowerLevels.js'
+import axios from 'axios'
+
 export default {
   name: 'Home',
+  created() {
+    this.refreshCampaign()
+  },
   methods: {
+    saveCampaigns() {
+      console.log(this.campaigns);
+      axios.post('http://localhost:3000/campaigns', this.campaigns).then(response => {
+        console.log(response)
+      });
+    },
     addCampaign() {
       this.campaigns.push({
         name: this.newCampaign.name,
         characters: []
       });
-      this.newAspect.name = null;
+      this.newCampaign.name = null;
+      this.saveCampaigns();
+    },
+    deleteCampaign(campaignName) {
+      var test = JSON.stringify({name: campaignName});
+      var test2 = { body: test};
+
+      console.log(test2);
+      axios.delete('http://localhost:3000/campaign/' + campaignName, null).then(response => {
+        console.log(response)
+        this.refreshCampaign();
+      });
+    },
+    refreshCampaign() {
+      axios.get('http://localhost:3000/campaigns').then(response => {
+        this.campaigns = response.data;
+      });
     }
   },
   props: {
@@ -51,112 +79,7 @@ export default {
     campaigns: {
       type: Array,
       required: false,
-      default: () => ([{
-        name: "Something Wicked This Way Comes",
-        characters: [{
-            "name": "Bob Swineagain",
-            "highConcept": "Old Knight of the Old Republic",
-            "powerLevel": PowerLevels.FeetInTheWater,
-            "trouble": "Eats too much",
-            "imgUrl": "https://c1.staticflickr.com/1/159/417827922_4998f4e61d_z.jpg?zz=1",
-            "aspects": [{
-                name: 'A Chest Full of Diamonds'
-              },
-              {
-                name: 'Tall, Dark, and Ugly'
-              },
-              {
-                name: 'Class Clown'
-              },
-              {
-                name: 'Devilishly Witty'
-              },
-              {
-                name: 'Friend to Fiends'
-              },
-              {
-                name: 'My Mothers Frozen Heart'
-              },
-              {
-                name: 'Wicked Cool Broomstick'
-              }
-            ],
-            "skills": [{
-              name: 'Whack Things Real Hard',
-              rating: '0'
-            }],
-            "stuntsAndPowers": [{
-              name: 'I\'ll Just Ignore You.',
-              description: 'Counterarguments are a waste of time. You prefer to simply not listen to the people you disagree with. You may use Will instead of Rapport to defend against attempts to damage your reputation or make you look bad in front of others.',
-              refresh: "1"
-            }]
-          },
-          {
-            "name": "Sarah Moors",
-            "highConcept": "Wizard of the Coast",
-            "powerLevel": PowerLevels.FeetInTheWater,
-            "trouble": "Rampant Paranoia",
-            "imgUrl": "https://i.pinimg.com/236x/77/a7/a3/77a7a38877cb05374c9c48a31a0631f8--hair-models-face-reference.jpg",
-            "aspects": [{
-                name: 'My lucky, trusty stick'
-              },
-              {
-                name: 'Friend to all God\'s creatures'
-              },
-              {
-                name: 'Sticks and Stones Won\'t Break MY Bones'
-              },
-              {
-                name: 'Agoraphobic'
-              },
-              {
-                name: 'Germs are everywhere'
-              }
-            ],
-            "skills": [{
-              name: 'Whack Things Real Hard',
-              rating: '0'
-            }],
-            "stuntsAndPowers": [{
-              name: 'Danger Sense.',
-              description: 'You have an almost preternatural capacity for detecting danger. Your Notice skill works unimpeded by conditions like total concealment, darkness, or other sensory impairments in situations where someone or something intends to harm you.',
-              refresh: "1"
-            }]
-          },
-          {
-            "name": "Trillian Meowertins",
-            "highConcept": "Free Real Estate Agent",
-            "powerLevel": PowerLevels.FeetInTheWater,
-            "trouble": "Human Contact At All Times",
-            "imgUrl": "https://images-ra.adoptapet.com/seo/2/ff/1136_ff.jpg",
-            "aspects": [{
-                name: 'Thwapy Tail'
-              },
-              {
-                name: 'Good Meowing Voice'
-              },
-              {
-                name: 'Sleep All Day, Zoom All Night'
-              },
-              {
-                name: 'Monster Truck'
-              },
-              {
-                name: 'Pet Me'
-              }
-            ],
-            "skills": [{
-              name: 'Whack Things Real Hard',
-              rating: '0'
-            }],
-            "stuntsAndPowers": [{
-              name: 'Proximity Alert',
-              description: '+2 to noticing when someone is close to you.',
-              refresh: "1"
-            }]
-          }
-        ]
-      }])
+      default: () => ([]),
     }
   }
 }
