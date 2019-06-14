@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var mongodb = require('../helpers/mongodb.js')
+const dotenv = require('dotenv').config();
+
+if (dotenv.error) {
+  throw dotenv.error
+}
 
 var client;
 

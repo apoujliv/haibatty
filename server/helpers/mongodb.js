@@ -1,8 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
-var uri = "mongodb+srv://haibatty_admin:v3zMsqtCCWWoR6cn@haibatty-onpxb.mongodb.net/test?retryWrites=true";
 
 module.exports.createClient = function(callback) {
-  var client = new MongoClient(uri, {
+  var client = new MongoClient(process.env.mongodbconn, {
     useNewUrlParser: true
   });
 
