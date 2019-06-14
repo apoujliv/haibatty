@@ -27,6 +27,10 @@
 </template>
 
 <style>
+@import './assets/grayscale.css';
+</style>
+
+<style>
 html {
   position: relative;
   min-height: 100%;

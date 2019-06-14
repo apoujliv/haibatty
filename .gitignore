@@ -19,3 +19,8 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+build
+npm-debug.log
+.env
+.DS_Store
